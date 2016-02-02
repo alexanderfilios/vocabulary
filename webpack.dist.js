@@ -60,7 +60,7 @@ module.exports = {
   ],
 
   sassLoader: {
-    outputStyle: 'nested',
+    outputStyle: 'compressed',
     precision: 10,
     sourceComments: false
   },
