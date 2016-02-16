@@ -8,10 +8,6 @@
     ],
     "ban": false,
     "class-name": true,
-    "comment-format": [
-      true,
-      "check-space"
-    ],
     "curly": false,
     "eofline": true,
     "forin": true,
@@ -126,7 +122,6 @@
       "check-branch",
       "check-decl",
       "check-operator",
-      "check-separator",
       "check-type"
     ]
   }
