@@ -12,7 +12,7 @@ before_install:
   - sh -e /etc/init.d/xvfb start
 
 install:
-  - npm install
+  - npm install && npm run typings
 
 script:
   - ./node_modules/.bin/gulp dist
