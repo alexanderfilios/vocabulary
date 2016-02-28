@@ -39,6 +39,7 @@ $ ./node_modules/.bin/gulp
 ### Installing Project-local Dependencies
 ```shell
 $ npm install
+$ npm run typings
 ```
 
 
