@@ -3,7 +3,7 @@
 
 # Angular2 Webpack Seed
 
-- Angular
+- Angular2
 - Gulp
 - Jasmine
 - Karma
