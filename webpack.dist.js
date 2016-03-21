@@ -4,6 +4,7 @@ const config = require('./webpack.base');
 
 // plugins
 const CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const DedupePlugin = webpack.optimize.DedupePlugin;
 const DefinePlugin = webpack.DefinePlugin;
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -41,6 +42,7 @@ module.exports = {
     new DedupePlugin(),
     new OccurenceOrderPlugin(),
     new CommonsChunkPlugin({name: 'vendor', filename: 'vendor.js', minChunks: Infinity}),
+    new CopyWebpackPlugin(config.assets),
     new HtmlWebpackPlugin({
       chunksSortMode: 'none',
       filename: 'index.html',

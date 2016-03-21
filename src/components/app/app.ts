@@ -23,6 +23,11 @@ import { Projects } from '../projects/projects';
     <main>
       <router-outlet></router-outlet>
     </main>
+    
+    <div class="vendor-widget">
+      Vendor widget styled via src/assets/vendor.css
+      <img src="images/image.png" />
+    </div>
   `
 })
 
