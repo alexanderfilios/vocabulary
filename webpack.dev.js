@@ -4,6 +4,7 @@ const config = require('./webpack.base');
 
 // plugins
 const CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const DefinePlugin = webpack.DefinePlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const OccurenceOrderPlugin = webpack.optimize.OccurenceOrderPlugin;
@@ -47,6 +48,7 @@ module.exports = {
     }),
     new OccurenceOrderPlugin(),
     new CommonsChunkPlugin({name: 'vendor', filename: 'vendor.js', minChunks: Infinity}),
+    new CopyWebpackPlugin(config.assets),
     new HtmlWebpackPlugin({
       chunksSortMode: 'none',
       filename: 'index.html',

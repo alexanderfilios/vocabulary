@@ -3,6 +3,11 @@ const path = require('path');
 
 
 module.exports = {
+  assets: [
+    {from: 'src/assets/vendor.css'},
+    {from: 'src/assets/images', to: 'images'}
+  ],
+
   entry: {
     main: './src/main',
     vendor: [
