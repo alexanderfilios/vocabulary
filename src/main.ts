@@ -3,14 +3,14 @@ import { bootstrap } from 'angular2/platform/browser';
 import { HTTP_PROVIDERS } from 'angular2/http';
 import { APP_BASE_HREF, ROUTER_PROVIDERS } from 'angular2/router';
 
+// core
+import { AUTH_PROVIDERS } from './core/auth';
+
 // root component
-import { App } from 'components/app/app';
+import { App } from './views/app';
 
-// modules
-import { AUTH_PROVIDERS } from 'modules/auth/providers';
-
-// global styles
-import 'styles/styles.scss';
+// common styles
+import './views/common/styles.scss';
 
 
 if (process.env.NODE_ENV === 'production') {

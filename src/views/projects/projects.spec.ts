@@ -1,22 +1,6 @@
-/* tslint:disable:no-unused-variable typedef */
-import { Component } from 'angular2/core';
-import {
-  afterEach,
-  beforeEach,
-  describe,
-  fdescribe,
-  xdescribe,
-  expect,
-  it,
-  fit,
-  xit,
-  beforeEachProviders,
-  injectAsync,
-  TestComponentBuilder
-} from 'angular2/testing';
-
-import { AuthService } from 'modules/auth/auth-service';
-import { ProjectService } from 'modules/project/project-service';
+import { describe, expect, it, beforeEachProviders, injectAsync, TestComponentBuilder } from 'angular2/testing';
+import { AuthService } from 'src/core/auth';
+import { ProjectService } from 'src/core/project';
 import { Projects } from './projects';
 
 

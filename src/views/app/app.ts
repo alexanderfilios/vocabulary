@@ -1,7 +1,7 @@
 import { Component } from 'angular2/core';
 import { RouteConfig, RouterLink, RouterOutlet } from 'angular2/router';
-import { Home } from '../home/home';
-import { Projects } from '../projects/projects';
+import { Home } from 'src/views/home';
+import { Projects } from 'src/views/projects';
 
 
 @RouteConfig([
