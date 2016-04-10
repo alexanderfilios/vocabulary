@@ -4,7 +4,6 @@
 # Angular2 Webpack Seed
 
 - Angular2
-- Gulp
 - Jasmine
 - Karma
 - SASS
@@ -13,71 +12,37 @@
 - Webpack Development Server
 
 
-## Features
+#### Features
 - Inline external HTML templates into typescript component files (optional)
 - Inline and autoprefix external SCSS files into typescript component files (optional)
-- Inject styles into `index.html` (optional)
+- Inject style tags into `index.html` (optional)
 - Inject script tags into `index.html`
 - Bundle and minify release builds
 
 
-## Getting Started
-### Prerequisites
-- `node >=5.2`
+Getting Started
+---------------
 
-### Installing Global Dependencies
-##### Gulp v4 (optional)
-```shell
-$ npm install -g gulpjs/gulp-cli#4.0
-```
-The gulp tasks for this project require gulp v4-alpha. If you don't wish to globally install the v4 gulp-cli, you can run the gulp tasks using the locally installed gulp under `./node_modules/.bin` — for example:
-```shell
-$ ./node_modules/.bin/gulp
-```
+#### Prerequisites
+- `node >=5.10`
 
-
-### Installing Project-local Dependencies
+#### Installing Dependencies
 ```shell
 $ npm install
 $ npm run typings
 ```
 
 
-## Commands
-#### Develop
-```shell
-$ gulp
-```
+Usage
+-----
 
-- Start the Webpack dev server at <a href="http://localhost:3000" target="_blank">localhost:3000</a>
-- Watch for changes to your source files
-- Live-reload the browser
-
-#### Lint (tslint)
-```shell
-$ gulp lint
-```
-
-#### Test (single-run)
-```shell
-$ gulp test
-```
-
-#### Test (watch mode)
-```shell
-$ gulp test.watch
-```
-
-#### Build
-```shell
-$ gulp build
-```
-
-#### Dist build
-```shell
-$ gulp dist
-```
-Executes the following:
-- `gulp lint`
-- `gulp test`
-- `gulp build`
+|Script|Description|
+|---|---|
+|`npm start`|Start the Webpack DevServer at `localhost:3000`|
+|`npm run build`|Lint, test, and build the application to `./target`|
+|`npm run dev`|Same as `npm start`|
+|`npm run lint`|Lint `.ts` files using tslint|
+|`npm test`|Run unit tests with Karma and Jasmine|
+|`npm run test:watch`|Run unit tests with Karma and Jasmine; watch for changes to re-run tests|
+|`npm run typings`|Install ambient typings|
+|`npm version`|Bump package.json version, generate CHANGELOG.md, git commit and tag (see [npm version](https://docs.npmjs.com/cli/version))|

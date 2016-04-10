@@ -1,20 +1,5 @@
-/* tslint:disable:no-unused-variable typedef */
 import { Component } from 'angular2/core';
-import {
-  afterEach,
-  beforeEach,
-  describe,
-  fdescribe,
-  xdescribe,
-  expect,
-  it,
-  fit,
-  xit,
-  beforeEachProviders,
-  injectAsync,
-  TestComponentBuilder
-} from 'angular2/testing';
-
+import { describe, expect, it, injectAsync, TestComponentBuilder } from 'angular2/testing';
 import { Home } from './home';
 
 

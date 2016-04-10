@@ -4,7 +4,7 @@ dist: trusty
 language: node_js
 
 node_js:
-  - 5.2
+  - "5.10"
 
 before_install:
   - export CHROME_BIN=chromium-browser
@@ -15,7 +15,7 @@ install:
   - npm install && npm run typings
 
 script:
-  - ./node_modules/.bin/gulp dist
+  - npm run build
 
 notifications:
   email:

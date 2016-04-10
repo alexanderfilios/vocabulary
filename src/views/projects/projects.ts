@@ -1,6 +1,6 @@
 import { Component } from 'angular2/core';
 import { NgFor } from 'angular2/common';
-import { ProjectService } from 'modules/project/project-service';
+import { ProjectService } from 'src/core/project';
 
 const styles: string = require('./projects.scss');
 const template: string = require('./projects.html');

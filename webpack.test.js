@@ -1,19 +1,18 @@
-const path = require('path');
-const webpack = require('webpack');
-const config = require('./webpack.base');
+const webpackBase = require('./webpack.base');
+const config = webpackBase.config;
+const loaders = webpackBase.loaders;
 
 
 module.exports = {
   devtool: 'inline-source-map',
   resolve: config.resolve,
-  postcss: config.postcss,
 
   module: {
     loaders: [
-      {test: /\.html$/, loader: 'raw'},
-      {test: /\.scss$/, include: [path.resolve(__dirname, 'src/components')], loader: 'raw!postcss-loader!sass'},
-      {test: /\.scss$/, include: [path.resolve(__dirname, 'src/styles')], loader: 'style!css!postcss-loader!sass'},
-      {test: /\.ts$/, exclude: [/node_modules/], loader: 'ts'}
+      loaders.ts,
+      loaders.html,
+      loaders.scss.common,
+      loaders.scss.components
     ],
 
     noParse: config.module.noParse
