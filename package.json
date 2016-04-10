@@ -38,8 +38,6 @@
   },
   "devDependencies": {
     "autoprefixer": "~6.3.6",
-    "browser-sync": "~2.11.2",
-    "connect-history-api-fallback": "~1.2.0",
     "conventional-changelog-cli": "~1.1.1",
     "copy-webpack-plugin": "~1.1.1",
     "cross-env": "~1.0.7",
