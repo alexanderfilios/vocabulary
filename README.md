@@ -24,7 +24,7 @@ Getting Started
 ---------------
 
 #### Prerequisites
-- `node >=5.2`
+- `node >=5.10`
 
 #### Installing Dependencies
 ```shell
