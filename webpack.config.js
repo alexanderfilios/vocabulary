@@ -5,11 +5,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
 
-const CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
-const DedupePlugin = webpack.optimize.DedupePlugin;
-const DefinePlugin = webpack.DefinePlugin;
-const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
-
 
 //=========================================================
 //  ENVIRONMENT VARS
@@ -46,7 +41,7 @@ config.module = {
 };
 
 config.plugins = [
-  new DefinePlugin({
+  new webpack.DefinePlugin({
     'process.env.NODE_ENV': JSON.stringify(NODE_ENV)
   })
 ];
@@ -96,7 +91,7 @@ if (ENV_DEVELOPMENT || ENV_PRODUCTION) {
   };
 
   config.plugins.push(
-    new CommonsChunkPlugin({
+    new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor', filename: 'vendor.js', minChunks: Infinity
     }),
     new CopyWebpackPlugin([
@@ -155,8 +150,8 @@ if (ENV_PRODUCTION) {
 
   config.plugins.push(
     new ExtractTextPlugin('styles.css'),
-    new DedupePlugin(),
-    new UglifyJsPlugin({
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.UglifyJsPlugin({
       mangle: false,
       compress: {
         dead_code: true, // eslint-disable-line camelcase
