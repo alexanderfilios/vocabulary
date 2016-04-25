@@ -35,8 +35,13 @@ exports.config = {
   entry: {
     main: ['./src/main'],
     vendor: [
-      'es6-shim',
-      'angular2/bundles/angular2-polyfills',
+      'core-js/es6/array',
+      'core-js/es6/map',
+      'core-js/es6/set',
+      'core-js/es6/string',
+      'core-js/es6/symbol',
+      'core-js/es7/reflect',
+      'zone.js',
       'angular2/common',
       'angular2/core',
       'angular2/http',
