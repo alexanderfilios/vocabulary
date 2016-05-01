@@ -1,7 +1,7 @@
-import { enableProdMode, provide } from 'angular2/core';
+import { enableProdMode } from 'angular2/core';
 import { bootstrap } from 'angular2/platform/browser';
 import { HTTP_PROVIDERS } from 'angular2/http';
-import { APP_BASE_HREF, ROUTER_PROVIDERS } from 'angular2/router';
+import { ROUTER_PROVIDERS } from 'angular2/router';
 
 // core
 import { AUTH_PROVIDERS } from './core/auth';
@@ -21,6 +21,5 @@ if (process.env.NODE_ENV === 'production') {
 bootstrap(App, [
   HTTP_PROVIDERS,
   ROUTER_PROVIDERS,
-  AUTH_PROVIDERS,
-  provide(APP_BASE_HREF, {useValue: '/'})
+  AUTH_PROVIDERS
 ]).catch((error: Error) => console.error(error));
