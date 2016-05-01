@@ -74,6 +74,8 @@ if (ENV_DEVELOPMENT || ENV_PRODUCTION) {
       'core-js/es6/string',
       'core-js/es6/symbol',
       'core-js/es7/reflect',
+      'core-js/fn/array/includes',
+      'core-js/fn/object/assign',
       'zone.js',
       'angular2/common',
       'angular2/core',

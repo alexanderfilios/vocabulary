@@ -4,6 +4,8 @@ require('core-js/es6/set');
 require('core-js/es6/string');
 require('core-js/es6/symbol');
 require('core-js/es7/reflect');
+require('core-js/fn/array/includes');
+require('core-js/fn/object/assign');
 require('zone.js');
 
 // Specify platform and application providers
