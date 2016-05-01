@@ -1,19 +1,19 @@
 const express = require('express');
 const logger = require('winston');
 
+const ROOT_DIR = process.cwd();
+
 
 //=========================================================
 //  SETUP
 //---------------------------------------------------------
-const ROOT_DIR = process.cwd();
-
 const app = express();
 
 app.set('host', process.env.HOST || 'localhost');
 app.set('port', process.env.PORT || 3000);
 
-app.use(express.static(`${ROOT_DIR}/target`));
 app.use(require('morgan')('dev'));
+app.use(express.static(`${ROOT_DIR}/target`));
 
 
 //=========================================================
