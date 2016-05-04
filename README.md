@@ -26,10 +26,11 @@ Getting Started
 #### Prerequisites
 - `node >=5.10`
 
-#### Installing Dependencies
+#### Quick Start
 ```shell
 $ npm install
 $ npm run typings
+$ npm start
 ```
 
 
