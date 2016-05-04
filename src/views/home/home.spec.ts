@@ -1,5 +1,6 @@
-import { Component } from 'angular2/core';
-import { describe, expect, it, injectAsync, TestComponentBuilder } from 'angular2/testing';
+import { Component } from '@angular/core';
+import { async, describe, expect, inject, it } from '@angular/core/testing';
+import { TestComponentBuilder } from '@angular/compiler/testing';
 import { Home } from './home';
 
 
@@ -11,28 +12,22 @@ class TestComponent {}
 
 
 describe('Home', () => {
-  it('should display a greeting', injectAsync([TestComponentBuilder], tcb => {
-    return new Promise(resolve => {
-      tcb.createAsync(Home)
-        .then(fixture => {
-          fixture.detectChanges();
-          let compiled = fixture.nativeElement;
-          expect(compiled.querySelector('h3')).toHaveText('Hello world!');
-          resolve();
-        });
-    });
-  }));
+  it('should display a greeting', async(inject([TestComponentBuilder], tcb => {
+    tcb.createAsync(Home)
+      .then(fixture => {
+        fixture.detectChanges();
+        let compiled = fixture.nativeElement;
+        expect(compiled.querySelector('h3')).toHaveText('Hello world!');
+      });
+  })));
 
-  it('should display a greeting (overrideTemplate)', injectAsync([TestComponentBuilder], tcb => {
-    return new Promise(resolve => {
-      tcb.overrideTemplate(TestComponent, '<home></home>')
-        .createAsync(Home)
-        .then(fixture => {
-          fixture.detectChanges();
-          let compiled = fixture.nativeElement;
-          expect(compiled.querySelector('h3')).toHaveText('Hello world!');
-          resolve();
-        });
-    });
-  }));
+  it('should display a greeting (overrideTemplate)', async(inject([TestComponentBuilder], tcb => {
+    tcb.overrideTemplate(TestComponent, '<home></home>')
+      .createAsync(Home)
+      .then(fixture => {
+        fixture.detectChanges();
+        let compiled = fixture.nativeElement;
+        expect(compiled.querySelector('h3')).toHaveText('Hello world!');
+      });
+  })));
 });

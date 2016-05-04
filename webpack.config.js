@@ -27,6 +27,14 @@ module.exports = config;
 
 
 config.resolve = {
+  alias: {
+    'angular2/core': 'node_modules/@angular/core/index.js',
+    'angular2/platform/browser': 'node_modules/@angular/platform-browser/index.js',
+    'angular2/testing': 'node_modules/@angular/testing/index.js',
+    'angular2/router': 'node_modules/@angular/router-deprecated/index.js',
+    'angular2/http': 'node_modules/@angular/http/index.js',
+    'angular2/http/testing': 'node_modules/@angular/http/testing.js'
+  },
   extensions: ['', '.ts', '.js'],
   modulesDirectories: ['node_modules'],
   root: path.resolve('.')
@@ -77,11 +85,11 @@ if (ENV_DEVELOPMENT || ENV_PRODUCTION) {
       'core-js/fn/array/includes',
       'core-js/fn/object/assign',
       'zone.js',
-      'angular2/common',
-      'angular2/core',
-      'angular2/http',
-      'angular2/platform/browser',
-      'angular2/router',
+      '@angular/common',
+      '@angular/core',
+      '@angular/http',
+      '@angular/platform-browser-dynamic',
+      '@angular/router-deprecated',
       'rxjs'
     ]
   };
@@ -154,7 +162,7 @@ if (ENV_PRODUCTION) {
     new ExtractTextPlugin('styles.css'),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
-      mangle: false,
+      mangle: true,
       compress: {
         dead_code: true, // eslint-disable-line camelcase
         screw_ie8: true, // eslint-disable-line camelcase

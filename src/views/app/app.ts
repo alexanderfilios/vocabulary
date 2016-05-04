@@ -1,12 +1,12 @@
-import { Component } from 'angular2/core';
-import { RouteConfig, RouterLink, RouterOutlet } from 'angular2/router';
+import { Component } from '@angular/core';
+import { Route, RouteConfig, RouterLink, RouterOutlet } from '@angular/router-deprecated';
 import { Home } from 'src/views/home';
 import { Projects } from 'src/views/projects';
 
 
 @RouteConfig([
-  {path: '/', component: Home, as: 'Home'},
-  {path: '/projects', component: Projects, as: 'Projects'}
+  new Route({path: '/', component: Home, name: 'Home'}),
+  new Route({path: '/projects', component: Projects, name: 'Projects'})
 ])
 
 @Component({
