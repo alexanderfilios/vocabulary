@@ -12,7 +12,7 @@ before_install:
   - sh -e /etc/init.d/xvfb start
 
 install:
-  - npm install && npm run typings
+  - npm install
 
 script:
   - npm run build
