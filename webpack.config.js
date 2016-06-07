@@ -4,6 +4,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
+const WebpackMd5Hash = require('webpack-md5-hash');
 
 
 //=========================================================
@@ -27,14 +28,6 @@ module.exports = config;
 
 
 config.resolve = {
-  alias: {
-    'angular2/core': 'node_modules/@angular/core/index.js',
-    'angular2/platform/browser': 'node_modules/@angular/platform-browser/index.js',
-    'angular2/testing': 'node_modules/@angular/testing/index.js',
-    'angular2/router': 'node_modules/@angular/router-deprecated/index.js',
-    'angular2/http': 'node_modules/@angular/http/index.js',
-    'angular2/http/testing': 'node_modules/@angular/http/testing.js'
-  },
   extensions: ['', '.ts', '.js'],
   modulesDirectories: ['node_modules'],
   root: path.resolve('.')
@@ -69,8 +62,6 @@ config.sassLoader = {
 //  DEVELOPMENT or PRODUCTION
 //-------------------------------------
 if (ENV_DEVELOPMENT || ENV_PRODUCTION) {
-  config.devtool = 'source-map';
-
   config.entry = {
     main: [
       './src/main'
@@ -102,7 +93,8 @@ if (ENV_DEVELOPMENT || ENV_PRODUCTION) {
 
   config.plugins.push(
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor', filename: 'vendor.js', minChunks: Infinity
+      name: 'vendor',
+      minChunks: Infinity
     }),
     new CopyWebpackPlugin([
       {from: 'src/assets/vendor.css'},
@@ -110,7 +102,7 @@ if (ENV_DEVELOPMENT || ENV_PRODUCTION) {
     ]),
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      hash: true,
+      hash: false,
       inject: 'body',
       template: './src/index.html'
     })
@@ -122,6 +114,8 @@ if (ENV_DEVELOPMENT || ENV_PRODUCTION) {
 //  DEVELOPMENT
 //-------------------------------------
 if (ENV_DEVELOPMENT) {
+  config.devtool = 'cheap-module-source-map';
+
   config.entry.main.unshift(`webpack-dev-server/client?http://${HOST}:${PORT}`);
 
   config.module.loaders.push(
@@ -154,12 +148,17 @@ if (ENV_DEVELOPMENT) {
 //  PRODUCTION
 //-------------------------------------
 if (ENV_PRODUCTION) {
+  config.devtool = 'source-map';
+
+  config.output.filename = '[name].[chunkhash].js';
+
   config.module.loaders.push(
     {test: /\.scss$/, loader: ExtractTextPlugin.extract('css?-autoprefixer!postcss!sass'), include: path.resolve('src/views/common/styles')}
   );
 
   config.plugins.push(
-    new ExtractTextPlugin('styles.css'),
+    new WebpackMd5Hash(),
+    new ExtractTextPlugin('styles.[contenthash].css'),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
       mangle: true,
