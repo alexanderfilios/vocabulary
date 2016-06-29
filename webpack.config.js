@@ -63,26 +63,9 @@ config.sassLoader = {
 //-------------------------------------
 if (ENV_DEVELOPMENT || ENV_PRODUCTION) {
   config.entry = {
-    main: [
-      './src/main'
-    ],
-    vendor: [
-      'core-js/es6/array',
-      'core-js/es6/map',
-      'core-js/es6/set',
-      'core-js/es6/string',
-      'core-js/es6/symbol',
-      'core-js/es7/reflect',
-      'core-js/fn/array/includes',
-      'core-js/fn/object/assign',
-      'zone.js',
-      '@angular/common',
-      '@angular/core',
-      '@angular/http',
-      '@angular/platform-browser-dynamic',
-      '@angular/router-deprecated',
-      'rxjs'
-    ]
+    main: ['./src/main.ts'],
+    polyfills: './src/polyfills.ts',
+    vendor: './src/vendor.ts'
   };
 
   config.output = {
@@ -93,14 +76,14 @@ if (ENV_DEVELOPMENT || ENV_PRODUCTION) {
 
   config.plugins.push(
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
+      name: ['vendor', 'polyfills'],
       minChunks: Infinity
     }),
     new CopyWebpackPlugin([
-      {from: 'src/assets/vendor.css'},
-      {from: 'src/assets/images', to: 'images'}
+      {from: './src/assets', to: 'assets'}
     ]),
     new HtmlWebpackPlugin({
+      chunkSortMode: 'dependency',
       filename: 'index.html',
       hash: false,
       inject: 'body',
