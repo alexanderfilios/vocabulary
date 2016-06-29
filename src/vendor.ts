@@ -7,4 +7,5 @@ import '@angular/platform-browser-dynamic';
 import '@angular/router';
 
 // RxJS
-import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/delay';
