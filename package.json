@@ -17,19 +17,21 @@
     "node": ">=6.1"
   },
   "scripts": {
-    "build": "cross-env NODE_ENV=production webpack --display-chunks --progress",
+    "build": "cross-env NODE_ENV=production webpack --display-chunks",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
-    "clean": "del-cli ./target",
+    "clean": "run-s clean:coverage clean:target",
+    "clean:coverage": "del-cli coverage",
+    "clean:target": "del-cli target",
     "lint": "npm-run-all lint:js lint:ts",
-    "lint:js": "eslint -c .eslintrc.yml *.js ./src ./server",
-    "lint:ts": "tslint './src/**/*.ts'",
+    "lint:js": "eslint -c .eslintrc.yml *.js src server",
+    "lint:ts": "tslint 'src/**/*.ts'",
     "postinstall": "npm run typings",
-    "prebuild": "npm-run-all clean lint test",
-    "pretest": "npm run lint",
-    "server": "cross-env NODE_ENV=development nodemon -w 'server/**/*.*' ./server/main.js",
+    "prebuild": "npm run clean:target",
+    "pretest": "run-s clean:coverage lint",
+    "server": "cross-env NODE_ENV=development nodemon -w 'server/**/*.*' server/main.js",
     "server:dev": "cross-env NODE_ENV=development webpack-dev-server --progress",
     "start": "npm run server:dev",
-    "test": "cross-env NODE_ENV=test karma start --single-run",
+    "test": "cross-env NODE_ENV=test karma start --single-run --coverage",
     "test:watch": "cross-env NODE_ENV=test karma start",
     "typings": "typings install",
     "version": "npm run changelog && git add CHANGELOG.md"
@@ -59,9 +61,11 @@
     "extract-text-webpack-plugin": "~1.0.1",
     "html-webpack-plugin": "~2.22.0",
     "immutable": "~3.8.1",
+    "istanbul-instrumenter-loader": "~0.2.0",
     "jasmine-core": "~2.4.1",
     "karma": "~1.1.2",
     "karma-chrome-launcher": "~1.0.1",
+    "karma-coverage": "~1.1.1",
     "karma-jasmine": "~1.0.2",
     "karma-sourcemap-loader": "~0.3.7",
     "karma-webpack": "~1.7.0",
@@ -81,6 +85,7 @@
     "webpack": "~1.13.1",
     "webpack-dev-server": "~1.14.1",
     "webpack-md5-hash": "~0.0.5",
-    "winston": "~2.2.0"
+    "winston": "~2.2.0",
+    "yargs": "~4.8.1"
   }
 }
