@@ -1,6 +1,12 @@
+const compression = require('compression');
 const express = require('express');
+const favicon = require('serve-favicon');
+const helmet = require('helmet');
 const logger = require('winston');
 
+const NODE_ENV = process.env.NODE_ENV;
+const ENV_DEVELOPMENT = NODE_ENV === 'development';
+const ENV_PRODUCTION = NODE_ENV === 'production';
 const ROOT_DIR = process.cwd();
 
 
@@ -9,11 +15,29 @@ const ROOT_DIR = process.cwd();
 //---------------------------------------------------------
 const app = express();
 
+// server address
 app.set('host', process.env.HOST || 'localhost');
 app.set('port', process.env.PORT || 3000);
 
-app.use(require('morgan')('dev'));
-app.use(express.static(`${ROOT_DIR}/target`));
+// HTTP headers
+app.disable('x-powered-by');
+app.use(helmet.frameguard({action: 'deny'}));
+app.use(helmet.hsts({force: true, maxAge: 7776000000})); // 7776000000ms == 90 days
+app.use(helmet.noSniff());
+app.use(helmet.xssFilter());
+app.use(helmet.ieNoOpen());
+
+// gzip compression
+app.use(compression());
+
+// development env
+if (ENV_DEVELOPMENT) {
+  app.use(require('morgan')('dev'));
+}
+
+// static files
+app.use(express.static(`${ROOT_DIR}/target`, {index: false}));
+app.use(favicon(`${ROOT_DIR}/server/static/favicon.ico`));
 
 
 //=========================================================
@@ -21,8 +45,13 @@ app.use(express.static(`${ROOT_DIR}/target`));
 //---------------------------------------------------------
 const router = new express.Router();
 
-router.get('*', (req, res) => {
-  res.sendFile(`${ROOT_DIR}/target/index.html`);
+router.all('*', (req, res) => {
+  if (ENV_PRODUCTION && req.headers['x-forwarded-proto'] !== 'https') {
+    return res.redirect(`https://${req.headers.host}${req.url}`);
+  }
+  else {
+    res.sendFile(`${ROOT_DIR}/target/index.html`);
+  }
 });
 
 app.use(router);
