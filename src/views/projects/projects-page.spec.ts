@@ -1,5 +1,4 @@
-import { beforeEach, beforeEachProviders, describe, expect, inject } from '@angular/core/testing';
-import { TestComponentBuilder } from '@angular/compiler/testing';
+import { addProviders, inject, TestComponentBuilder } from '@angular/core/testing';
 import { ApiService } from 'src/core/api';
 import { ProjectService } from 'src/core/projects';
 import { ProjectsPage } from './projects-page';
@@ -8,17 +7,20 @@ import { ProjectsPage } from './projects-page';
 describe('ProjectsPage', () => {
   let builder;
 
-  beforeEachProviders(() => [
-    ApiService,
-    ProjectService
-  ]);
+  beforeEach(() => {
+    addProviders([
+      ApiService,
+      ProjectService
+    ]);
 
-  beforeEach(inject([TestComponentBuilder], (tcb) => {
-    builder = tcb;
-  }));
+    inject([TestComponentBuilder], tcb => {
+      builder = tcb;
+    })();
+  });
 
   it('should display a list of projects', done => {
-    builder.createAsync(ProjectsPage)
+    builder
+      .createAsync(ProjectsPage)
       .then(fixture => {
         fixture.detectChanges();
         let compiled = fixture.nativeElement;

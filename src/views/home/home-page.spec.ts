@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { async, beforeEach, describe, expect, inject, it } from '@angular/core/testing';
-import { TestComponentBuilder } from '@angular/compiler/testing';
+import { inject, TestComponentBuilder } from '@angular/core/testing';
 import { HomePage } from './home-page';
 
 
@@ -14,26 +13,29 @@ class TestComponent {}
 describe('HomePage', () => {
   let builder;
 
-  beforeEach(inject([TestComponentBuilder], tcb => {
-    builder = tcb;
-  }));
+  beforeEach(() => {
+    inject([TestComponentBuilder], tcb => {
+      builder = tcb;
+    })();
+  });
 
-  it('should display a greeting', async(() => {
+  it('should display a greeting', () => {
     builder.createAsync(HomePage)
       .then(fixture => {
         fixture.detectChanges();
         let compiled = fixture.nativeElement;
-        expect(compiled.querySelector('h3')).toHaveText('Hello Angular! :)');
+        expect(compiled.querySelector('h3').textContent).toBe('Hello Angular! :)');
       });
-  }));
+  });
 
-  it('should display a greeting (overrideTemplate)', async(() => {
-    builder.overrideTemplate(TestComponent, '<home></home>')
+  it('should display a greeting (overrideTemplate)', () => {
+    builder
+      .overrideTemplate(TestComponent, '<home></home>')
       .createAsync(HomePage)
       .then(fixture => {
         fixture.detectChanges();
         let compiled = fixture.nativeElement;
-        expect(compiled.querySelector('h3')).toHaveText('Hello Angular! :)');
+        expect(compiled.querySelector('h3').textContent).toBe('Hello Angular! :)');
       });
-  }));
+  });
 });

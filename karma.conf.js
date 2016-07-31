@@ -1,5 +1,7 @@
+const argv = require('yargs').argv;
+
 module.exports = config => {
-  config.set({
+  const options = {
     frameworks: ['jasmine'],
 
     files: ['karma.entry.js'],
@@ -22,13 +24,19 @@ module.exports = config => {
 
     singleRun: false,
 
-    customLaunchers: {
-      TRAVIS_CHROME: {
-        base: 'Chrome',
-        flags: ['--no-sandbox']
-      }
-    },
+    browsers: ['Chrome']
+  };
 
-    browsers: process.env.TRAVIS ? ['TRAVIS_CHROME'] : ['Chrome']
-  });
+  if (argv.coverage) {
+    options.reporters.push('coverage');
+    options.coverageReporter = {
+      dir: 'coverage',
+      subdir: '.',
+      reporters: [
+        {type: 'lcov'}
+      ]
+    };
+  }
+
+  config.set(options);
 };

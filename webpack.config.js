@@ -1,3 +1,4 @@
+const argv = require('yargs').argv;
 const autoprefixer = require('autoprefixer');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -165,4 +166,18 @@ if (ENV_TEST) {
   config.module.loaders.push(
     {test: /\.scss$/, loader: 'style!css!postcss!sass', include: path.resolve('src/views/common/styles')}
   );
+
+  if (argv.coverage) {
+    config.module.postLoaders = [
+      {
+        test: /\.(js|ts)$/,
+        loader: 'istanbul-instrumenter-loader',
+        include: path.resolve('./src'),
+        exclude: [
+          /\.spec\.ts$/,
+          /node_modules/
+        ]
+      }
+    ];
+  }
 }
