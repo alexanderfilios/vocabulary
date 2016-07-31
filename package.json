@@ -25,6 +25,7 @@
     "lint:ts": "tslint './src/**/*.ts'",
     "postinstall": "npm run typings",
     "prebuild": "npm-run-all clean lint test",
+    "pretest": "npm run lint",
     "server": "cross-env NODE_ENV=development nodemon -w 'server/**/*.*' ./server/main.js",
     "server:dev": "cross-env NODE_ENV=development webpack-dev-server --progress",
     "start": "npm run server:dev",

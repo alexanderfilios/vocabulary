@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/r-park/angular2-webpack-seed.svg?branch=master)](https://travis-ci.org/r-park/angular2-webpack-seed)
+[![CircleCI](https://circleci.com/gh/r-park/angular2-webpack-seed.svg?style=shield&circle-token=889e179b1930b3f3291bbf27a4da6df98726edf0)](https://circleci.com/gh/r-park/angular2-webpack-seed)
 
 
 # Angular2 Webpack Seed
