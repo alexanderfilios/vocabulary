@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   selector: 'app',
   template: `
     <header>
-      <a [routerLink]="['/']">Home</a> | <a [routerLink]="['/projects']">Projects</a>
+      <a routerLink="/">Home</a> | <a routerLink="/projects">Projects</a>
     </header>
 
     <main>
@@ -14,4 +14,4 @@ import { Component } from '@angular/core';
   `
 })
 
-export class App {}
+export class AppComponent {}

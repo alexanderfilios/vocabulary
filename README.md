@@ -3,7 +3,7 @@
 
 # Angular2 Webpack Seed
 
-- Angular2
+- Angular2 rc.6
 - Jasmine
 - Karma
 - SASS
@@ -24,12 +24,11 @@ Getting Started
 ---------------
 
 #### Prerequisites
-- `node >=5.12`
+- `node >= 6`
 
 #### Quick Start
 ```shell
 $ npm install
-$ npm run typings
 $ npm start
 ```
 
@@ -47,5 +46,4 @@ Usage
 |`npm run server`|Start express server @ `localhost:3000` to serve built artifacts from `./target` (must run `npm run build` first)|
 |`npm test`|Run unit tests with Karma and Jasmine|
 |`npm run test:watch`|Run unit tests with Karma and Jasmine; watch for changes to re-run tests|
-|`npm run typings`|Install ambient typings|
 |`npm version`|Bump package.json version, generate CHANGELOG.md, git commit and tag (see [npm version](https://docs.npmjs.com/cli/version))|
