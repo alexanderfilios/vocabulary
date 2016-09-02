@@ -196,16 +196,21 @@ if (ENV_TEST) {
   config.module.loaders.push(loaders.sharedStyles);
 
   if (argv.coverage) {
-    config.module.postLoaders = [
-      {
-        test: /\.(js|ts)$/,
-        loader: 'istanbul-instrumenter-loader',
-        include: path.resolve('./src'),
-        exclude: [
-          /\.spec\.ts$/,
-          /node_modules/
-        ]
+    config.module.postLoaders = [{
+      test: /\.ts$/,
+      loader: 'istanbul-instrumenter-loader',
+      include: path.resolve('src'),
+      exclude: [
+        /\.spec\.ts$/,
+        /node_modules/
+      ]
+    }];
+
+    config.ts = {
+      compilerOptions: {
+        inlineSourceMap: true,
+        sourceMap: false
       }
-    ];
+    };
   }
 }
