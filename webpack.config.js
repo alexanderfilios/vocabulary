@@ -44,6 +44,10 @@ const loaders = {
     test: /\.html$/,
     loader: 'raw'
   },
+  json: {
+    test: /\.json$/,
+    loader: 'json'
+  },
   typescript: {
     test: /\.ts$/,
     loader: 'ts',
@@ -58,7 +62,7 @@ const loaders = {
 const config = module.exports = {};
 
 config.resolve = {
-  extensions: ['', '.ts', '.js'],
+  extensions: ['', '.ts', '.js', '.json'],
   modulesDirectories: ['node_modules'],
   root: path.resolve('.')
 };
@@ -67,6 +71,7 @@ config.module = {
   loaders: [
     loaders.typescript,
     loaders.html,
+    loaders.json,
     loaders.componentStyles
   ]
 };
