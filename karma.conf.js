@@ -28,13 +28,28 @@ module.exports = config => {
   };
 
   if (argv.coverage) {
-    options.reporters.push('coverage');
+    options.reporters = [
+      'mocha',
+      'coverage',
+      'karma-remap-istanbul'
+    ];
+
     options.coverageReporter = {
       dir: 'coverage',
-      subdir: '.',
-      reporters: [
-        {type: 'lcov'}
-      ]
+      file: 'coverage.json',
+      subdir: 'json',
+      type: 'json'
+    };
+
+    options.remapIstanbulReporter = {
+      src: 'coverage/json/coverage.json',
+      reports: {
+        html: 'coverage/html',
+        lcovonly: 'coverage/lcov/coverage.lcov',
+        text: null
+      },
+      timeoutNotCreated: 5000, // default value
+      timeoutNoMoreFiles: 5000 // default value
     };
   }
 
