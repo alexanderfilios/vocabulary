@@ -15,7 +15,6 @@ const projects: any[] = [
 @Injectable()
 export class ApiService {
   fetchProjects(): Observable<any[]> {
-    return Observable.of(projects)
-      .delay(1000);
+    return Observable.of(projects).delay(250);
   }
 }

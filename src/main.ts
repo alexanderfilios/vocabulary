@@ -1,19 +1,11 @@
 import { enableProdMode } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { HTTP_PROVIDERS } from '@angular/http';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-// core
-import { API_PROVIDERS } from './core/api';
-import { PROJECTS_PROVIDERS } from './core/projects';
+// Root module
+import { AppModule } from './app';
 
-// routes
-import { ROUTER_PROVIDERS } from './views/routes';
-
-// root component
-import { App } from './views/app';
-
-// common styles
-import './views/common/styles.scss';
+// shared styles
+import './shared/styles/styles.scss';
 
 
 if (process.env.NODE_ENV === 'production') {
@@ -21,9 +13,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 
-bootstrap(App, [
-  API_PROVIDERS,
-  HTTP_PROVIDERS,
-  PROJECTS_PROVIDERS,
-  ROUTER_PROVIDERS
-]).catch((error: Error) => console.error(error));
+document.addEventListener('DOMContentLoaded', () => {
+  platformBrowserDynamic().bootstrapModule(AppModule);
+});
