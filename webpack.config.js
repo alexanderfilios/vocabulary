@@ -1,4 +1,3 @@
-const argv = require('yargs').argv;
 const autoprefixer = require('autoprefixer');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -194,23 +193,4 @@ if (ENV_TEST) {
   config.devtool = 'inline-source-map';
 
   config.module.loaders.push(loaders.sharedStyles);
-
-  if (argv.coverage) {
-    config.module.postLoaders = [{
-      test: /\.ts$/,
-      loader: 'istanbul-instrumenter-loader',
-      include: path.resolve('src'),
-      exclude: [
-        /\.spec\.ts$/,
-        /node_modules/
-      ]
-    }];
-
-    config.ts = {
-      compilerOptions: {
-        inlineSourceMap: true,
-        sourceMap: false
-      }
-    };
-  }
 }

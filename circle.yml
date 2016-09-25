@@ -9,7 +9,6 @@ dependencies:
 test:
   post:
     - npm run build
-    - mv ./coverage ${CIRCLE_ARTIFACTS}
 
 #deployment:
 #  dev:
