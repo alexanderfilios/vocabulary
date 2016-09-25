@@ -13,11 +13,11 @@ const ROOT_DIR = process.cwd();
 //=========================================================
 //  SETUP
 //---------------------------------------------------------
+const HOST = '0.0.0.0';
+const PORT = 3000;
+
 const app = express();
 
-// server address
-app.set('host', process.env.HOST || 'localhost');
-app.set('port', process.env.PORT || 3000);
 
 // HTTP headers
 app.disable('x-powered-by');
@@ -60,11 +60,11 @@ app.use(router);
 //=========================================================
 //  START SERVER
 //---------------------------------------------------------
-app.listen(app.get('port'), app.get('host'), error => {
+app.listen(PORT, HOST, error => {
   if (error) {
     logger.error(error);
   }
   else {
-    logger.info(`Server listening @ ${app.get('host')}:${app.get('port')}`);
+    logger.info(`Server listening @ ${HOST}:${PORT}`);
   }
 });
