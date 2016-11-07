@@ -1,0 +1,52 @@
+body{
+  margin-top: 50px;
+}
+
+[ng-view] {
+  padding-top: 20px;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
+tags-input .host {
+  margin-top: 0px;
+}
+
+.dp-collapse{
+  background: #337ab7;
+  width: 35px;
+  text-align:center;
+  padding: 10px;
+  cursor:pointer;
+  display:block;
+}
+.dp-collapse:hover{
+  background: #fff;
+}
+.dp-collapse-right{
+  float: right;
+}
+.dp-collapse-center{
+  margin: auto;
+  text-align:center;
+}
+.starred{
+  color: yellow;
+}
+.dp-tweet-icon{
+  font-size: 20px;
+  color: #ccc;
+  margin-right: 15px;
+}
+.dp-tweet{
+  background-color: #fff;
+  padding: 20px;
+}
+.dp-tweets{
+  padding: 20px;
+}
+textarea {
+  resize: none;
+}

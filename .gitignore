@@ -1,0 +1,15 @@
+### Backend ###
+vocabulary-backend/target/
+vocabulary-backend/mvnw*
+
+### Frontend ###
+vocabulary-frontend/node_modules
+vocabulary-frontend/dist
+
+*/.DS_Store
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
