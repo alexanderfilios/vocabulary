@@ -7,6 +7,9 @@ import IRoute = angular.route.IRoute;
 import IRouteService = angular.route.IRouteService;
 import ILocationProvider = angular.ILocationProvider;
 import ILocationService = angular.ILocationService;
+
+
+
 /**
  * Created by alexandrosfilios on 30/10/16.
  */
@@ -34,7 +37,8 @@ export class ViewTermsComponent implements ng.IComponentOptions {
                 <th>Term</th>
                 <th>Definitions</th>
                 <th>Created On</th>
-                <th></th>
+                <th>Dictionaries</th>
+                <th>Edit</th>
             </tr>
         </thead>
         <tbody>
@@ -56,6 +60,10 @@ export class ViewTermsComponent implements ng.IComponentOptions {
                 </td>
                 <td>{{term.createdOn | date : 'd.MM.yy'}}</td>
                 <td>
+                    <a target="_blank" href="{{term.term | wordReferenceLink}}"><i class="wordreference" width="10" height="10" /></a>
+                    <a target="_blank" href="{{term.term | theFreeDictionaryLink}}"><i class="thefreedictionary" width="10" height="10" /></a>
+                </td>
+                <td>
                     <a ng-click="ctrl.edit(term)"><i class="glyphicon glyphicon-pencil" /></a>
                     <a ng-click="ctrl.delete(term)"><i class="glyphicon glyphicon-trash" /></a>
                 </td>
@@ -67,6 +75,15 @@ export class ViewTermsComponent implements ng.IComponentOptions {
         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
     </a>`;
+}
+
+export function wordReferenceLink() {
+    const BASE_LINK = 'http://www.wordreference.com/fren/';
+    return (term) => BASE_LINK + term.split(' ').join('+');
+}
+export function theFreeDictionaryLink() {
+    const BASE_LINK = 'http://fr.thefreedictionary.com/';
+    return (term) => BASE_LINK + term.split(' ').join('+');
 }
 
 interface ViewTermsScope extends IScope {

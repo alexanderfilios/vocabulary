@@ -7,7 +7,7 @@ import "ng-tags-input/build/ng-tags-input.min.css";
 import "angular-ui-bootstrap/src/typeahead";
 import {config as routesConfig} from "./configs/routes";
 import {AddTermComponent} from "./components/addTerm/AddTermComponent";
-import {ViewTermsComponent} from "./components/viewTerms/ViewTermsComponent";
+import {ViewTermsComponent, wordReferenceLink, theFreeDictionaryLink} from "./components/viewTerms/ViewTermsComponent";
 import {TermModel} from "../core/models/TermModel";
 import {TermService} from "../core/services/TermService";
 
@@ -16,4 +16,6 @@ angular.module("app.add", ["ngRoute", "smart-table", "ngTagsInput", "ui.bootstra
     .component("viewTerms", new ViewTermsComponent())
     .service("TermModel", TermModel)
     .service("TermService", TermService)
+    .filter("wordReferenceLink", wordReferenceLink)
+    .filter("theFreeDictionaryLink", theFreeDictionaryLink)
     .config(routesConfig);

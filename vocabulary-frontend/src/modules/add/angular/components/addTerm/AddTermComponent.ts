@@ -40,6 +40,10 @@ export class AddTermComponent implements ng.IComponentOptions {
                 typeahead-no-results="'No results!'"
                 class="form-control">
         </div>
+        <div class="col-xs-2 text-center">
+            <a target="_blank" href="{{term.term | wordReferenceLink}}"><i class="wordreference" width="10" height="10" /></a>
+            <a target="_blank" href="{{term.term | theFreeDictionaryLink}}"><i class="thefreedictionary" width="10" height="10" /></a>
+        </div>
         <div class="form-group col-xs-2">
                 <select class="form-control"
                         name="term.type"
@@ -55,7 +59,7 @@ export class AddTermComponent implements ng.IComponentOptions {
                 <option ng-repeat="gender in NOUN_GENDERS">{{gender}}</option>
             </select>
         </div>
-        <div class="form-group col-xs-5">
+        <div class="form-group col-xs-3">
             <input type="text"
                     class="form-control"
                     name="term.comments"
