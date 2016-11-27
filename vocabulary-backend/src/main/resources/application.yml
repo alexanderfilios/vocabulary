@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/Vocabulary
+    username: root
+    password: Ece-181920
+    platform: mysql
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+
+server.port: 8083
+
+liquibase:
+  contexts: test, production
+  enabled: false
+
+---
+spring:
+  profiles: container
+  datasource:
+    url: jdbc:mysql://${MYSQL_PORT_3306_TCP_ADDR}:${MYSQL_PORT_3306_TCP_PORT}/${MYSQL_ENV_MYSQL_DATABASE}
+    username: ${MYSQL_ENV_MYSQL_USER}
+    password: ${MYSQL_ENV_MYSQL_PASSWORD}
+liquibase:
+  enabled: true

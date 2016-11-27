@@ -1,0 +1,162 @@
+databaseChangeLog:
+- changeSet:
+    id: 1478528783954-1
+    author: alexandrosfilios (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+            name: id
+            type: INT
+        - column:
+            constraints:
+              nullable: false
+            name: antonym
+            type: VARCHAR(45)
+        - column:
+            constraints:
+              nullable: false
+            name: definition_id
+            type: INT
+        tableName: antonym
+- changeSet:
+    id: 1478528783954-2
+    author: alexandrosfilios (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+            name: id
+            type: INT
+        - column:
+            name: definition
+            type: VARCHAR(45)
+        - column:
+            name: comments
+            type: VARCHAR(45)
+        - column:
+            name: term_id
+            type: INT
+        tableName: definition
+- changeSet:
+    id: 1478528783954-3
+    author: alexandrosfilios (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+            name: id
+            type: INT
+        - column:
+            name: example
+            type: VARCHAR(100)
+        - column:
+            name: comments
+            type: VARCHAR(100)
+        - column:
+            name: definition_id
+            type: INT
+        tableName: example
+- changeSet:
+    id: 1478528783954-4
+    author: alexandrosfilios (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+            name: id
+            type: INT
+        - column:
+            constraints:
+              nullable: false
+            name: synonym
+            type: VARCHAR(45)
+        - column:
+            constraints:
+              nullable: false
+            name: definition_id
+            type: INT
+        tableName: synonym
+- changeSet:
+    id: 1478528783954-5
+    author: alexandrosfilios (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+            name: id
+            type: INT
+        - column:
+            name: term
+            type: VARCHAR(45)
+        - column:
+            name: comments
+            type: VARCHAR(45)
+        - column:
+            name: type
+            type: VARCHAR(45)
+        - column:
+            name: gender
+            type: VARCHAR(45)
+        - column:
+            name: is_reflexive
+            type: BIT(1)
+        - column:
+            name: created_on
+            type: datetime(6)
+        tableName: term
+- changeSet:
+    id: 1478528783954-6
+    author: alexandrosfilios (generated)
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: term_id
+        indexName: _idx
+        tableName: definition
+- changeSet:
+    id: 1478528783954-7
+    author: alexandrosfilios (generated)
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: definition_id
+        indexName: definition_id_idx
+        tableName: antonym
+- changeSet:
+    id: 1478528783954-8
+    author: alexandrosfilios (generated)
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: definition_id
+        indexName: definition_id_idx
+        tableName: synonym
+- changeSet:
+    id: 1478528783954-9
+    author: alexandrosfilios (generated)
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: antonym
+        indexName: term_id_idx
+        tableName: antonym
