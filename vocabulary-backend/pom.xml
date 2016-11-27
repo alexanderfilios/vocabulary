@@ -18,7 +18,6 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -89,7 +88,6 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-
             <plugin>
                 <!--Build the docker image with the command-->
                 <!--$ mvn package docker:build-->

@@ -18,12 +18,12 @@ module.exports = [
         test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'file-loader'
     }, {
-        test: '\.jpeg$',
+        test: '\.jpg$',
         exclude: /node_modules/,
         loader: 'file'
     }, {
-        test: /\.png$/,
+        test: '\.png$',
         exclude: /node_modules/,
-        loader: 'url-loader?mimetype=image/png'
+        loader: 'url'
     }
 ];

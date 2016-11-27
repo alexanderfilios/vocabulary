@@ -10,7 +10,6 @@ import ILocationService = angular.ILocationService;
 import {Constants} from "../../../../application/core/Constants";
 
 
-
 /**
  * Created by alexandrosfilios on 30/10/16.
  */

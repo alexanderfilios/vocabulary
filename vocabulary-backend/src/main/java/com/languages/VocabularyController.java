@@ -2,13 +2,10 @@ package com.languages;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import com.languages.entities.Definition;
-import com.languages.entities.Noun;
 import com.languages.entities.PdfList;
 import com.languages.entities.Term;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,7 +20,7 @@ import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
+
 
 /**
  * Created by alexandrosfilios on 30/10/16.
