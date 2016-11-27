@@ -1,32 +1,16 @@
-#======================================
-# Directories
-#--------------------------------------
-node_modules/
-target/
-tmp/
+# FRONTEND
+vocabulary-frontend/node_modules/
+vocabulary-frontend/dist/
+vocabulary-frontend/.idea/
 
+# BACKEND
+vocabulary-backend/target/
+vocabulary-backend/.idea/
+vocabulary-backend/mvnw*
 
-#======================================
-# Extensions
-#--------------------------------------
-*.gz
-*.log
-*.rar
-*.tar
-*.zip
+# FRONTEND 2
+vocabulary-frontend-2/
 
-
-#======================================
-# IDE generated
-#--------------------------------------
-.idea/
-.project
-*.iml
-
-
-#======================================
-# OS generated
-#--------------------------------------
-__MACOSX/
-.DS_Store
-Thumbs.db
+# GENERAL
+**.iml
+**/.DS_Store
