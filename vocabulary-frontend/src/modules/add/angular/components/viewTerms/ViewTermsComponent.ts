@@ -31,18 +31,24 @@ export class ViewTermsComponent implements ng.IComponentOptions {
     <div class="alert alert-danger" ng-if="termDeleted && !deleteSuccess">
         <i class="glyphicon glyphicon-remove" /> Term <strong>"{{termDeleted.term}}"</strong> was not deleted!
     </div>
-    <table st-table="termModel.terms" class="table table-striped">
+    <table st-table="displayedTerms" st-safe-src="terms" class="table table-striped">
         <thead>
             <tr>
-                <th>Term</th>
-                <th>Definitions</th>
-                <th>Created On</th>
-                <th>Dictionaries</th>
-                <th>Edit</th>
+                <th class="col-xs-2" st-sort="term">Term</th>
+                <th class="col-xs-6" st-sort="definition.definition" st-sort-default="true">Definitions</th>
+                <th class="col-xs-2" st-sort="createdOn">Created On</th>
+                <th class="col-xs-1">Dictionaries</th>
+                <th class="col-xs-1">Edit</th>
             </tr>
+            <tr>
+				<th colspan="5"><input class="form-control"
+				    st-search=""
+				    placeholder="Search term, definition, synonym, antonym or example..."
+				    type="text"/></th>
+			</tr>
         </thead>
         <tbody>
-            <tr ng-repeat="term in terms">
+            <tr ng-repeat="term in displayedTerms">
                 <td>{{term.term}}</td>
                 <td>
                     <div ng-repeat="definition in term.definitions">
@@ -69,16 +75,27 @@ export class ViewTermsComponent implements ng.IComponentOptions {
                 </td>
             </tr>
         </tbody>
+        <tfoot>
+            <tr>
+                <td class="text-center"
+                    st-pagination=""
+                    st-items-by-page="5"
+                    colspan="4"></td>
+            </tr>
+        </tfoot>
     </table>
+    
+    <div class="col-xs-8 col-xs-offset-2">
+        <embed src="${Constants.BASE_URL}paper"
+                width="500"
+                height="700"
+                type="application/pdf"></embed>
+    </div>
     </div>
     <a class="left carousel-control" href="/#/add" role="button" data-slide="prev">
         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
-    </a>
-    <embed src="${Constants.BASE_URL}paper"
-                width="500"
-                height="700"
-                type="application/pdf"></embed>`;
+    </a>`;
 }
 
 export function wordReferenceLink() {

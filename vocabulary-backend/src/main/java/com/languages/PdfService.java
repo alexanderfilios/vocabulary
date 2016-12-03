@@ -1,21 +1,25 @@
-package com.languages.entities;
+package com.languages;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.languages.VocabularyApplication;
+import com.languages.entities.*;
 import org.springframework.data.util.Pair;
+import org.springframework.format.datetime.DateFormatter;
+import org.springframework.stereotype.Service;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
  * Created by alexandrosfilios on 13/11/16.
  */
-public class PdfList {
+@Service
+public class PdfService {
     private static final Font TITLE_FONT = new Font(
             Font.FontFamily.HELVETICA, 18, Font.BOLD, BaseColor.BLACK);
     private static final Font TERM_FONT = new Font(
@@ -29,50 +33,39 @@ public class PdfList {
     private static final Font EXAMPLE_FONT = new Font(
             Font.FontFamily.TIMES_ROMAN, Font.DEFAULTSIZE, Font.ITALIC, BaseColor.BLACK);
     private static final Float FIRST_LINE_INDENT = 10f;
-    private static final Float INDENT = 15f;
-    private static final String TEMPORARY_FILENAME = "temp.pdf";
+    private static final Float INDENT = 25f;
 
-    private String filepath;
-    private Document document;
-    private String filename;
+    private static final DateFormatter dateFormatter = new DateFormatter("dd.MM.YYYY");
 
-    public PdfList(String filename) {
-        this.filepath = VocabularyApplication.RESOURCES_DIR + filename;
-        this.filename = filename;
-        this.document = new Document();
-    }
-    public String getFilepath() {
-        return filepath;
-    }
-    public String getFilename() {
-        return filename;
-    }
+    public PdfService() {}
 
-    public static PdfList getListFromTerms(List<Term> terms) {
-        PdfList pdfList = new PdfList(TEMPORARY_FILENAME);
-        try (FileOutputStream fileOutputStream = new FileOutputStream(pdfList.filepath)) {
-            PdfWriter.getInstance(pdfList.document, fileOutputStream);
-            pdfList.document.open();
+    public String getListFromTerms(String filename, List<Term> terms) {
+        Document document = new Document();
+        String filepath = VocabularyApplication.RESOURCES_DIR + filename;
+
+        try (FileOutputStream fileOutputStream = new FileOutputStream(filepath)) {
+            PdfWriter.getInstance(document, fileOutputStream);
+            document.open();
             // Setup document
-            pdfList.document.addTitle("Title");
-            pdfList.document.addCreationDate();
-            pdfList.document.setPageCount(1);
-            pdfList.document.setMargins(30, 30, 40, 40);
+            document.addTitle("Word List per " + dateFormatter.print(new Date(), Locale.getDefault()));
+            document.addCreationDate();
+            document.setPageCount(1);
+            document.setMargins(60, 60, 40, 40);
 
             // Add text
-            pdfList.document.add(getDocumentHeader("Vocabulary"));
-            pdfList.document.add(getEmptyLines(2));
+            document.add(getDocumentHeader("Vocabulary"));
+            document.add(getEmptyLines(2));
             if (terms != null && terms.size() > 0) {
-                pdfList.document.add(getTermList(terms));
+                document.add(getTermList(terms));
             } else {
-                pdfList.document.add(noTermsFound());
+                document.add(noTermsFound());
             }
-            pdfList.document.newPage();
-            pdfList.document.close();
+            document.newPage();
+            document.close();
         } catch (DocumentException | IOException e) {
             e.printStackTrace();
         }
-        return pdfList;
+        return filepath;
     }
     private static Paragraph noTermsFound() {
         return new Paragraph("No terms found!");
@@ -96,11 +89,10 @@ public class PdfList {
         return paragraph;
     }
 
-    public static Paragraph getTerm(Term term) {
+    private static Paragraph getTerm(Term term) {
 
         Paragraph termParagraph = new Paragraph();
         termParagraph.setFirstLineIndent(FIRST_LINE_INDENT);
-        termParagraph.setIndentationLeft(INDENT);
         termParagraph.setAlignment(Element.ALIGN_JUSTIFIED);
         termParagraph.setFont(TERM_FONT);
         termParagraph.add(term.getTerm() + ": ");
@@ -121,7 +113,7 @@ public class PdfList {
                                     .collect(Collectors.joining(" "));
 
                             definitionParagraph.setFont(DEFINITION_FONT);
-                            definitionParagraph.add(index + ". " + definition.getDefinition() + " ");
+                            definitionParagraph.add(" " + index + ". " + definition.getDefinition() + " ");
                             definitionParagraph.setFont(SYNONYM_FONT);
                             definitionParagraph.add(synonyms + " ");
                             definitionParagraph.setFont(ANTONYM_FONT);

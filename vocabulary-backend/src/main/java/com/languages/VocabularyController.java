@@ -1,11 +1,10 @@
 package com.languages;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import com.languages.entities.PdfList;
 import com.languages.entities.Term;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.StreamUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -31,6 +30,7 @@ import java.util.stream.Collectors;
 public class VocabularyController {
 
     private TermRepository termRepository;
+    private PdfService pdfService;
 
     @RequestMapping(value = "test")
     public ResponseEntity<String> testController() {
@@ -39,32 +39,26 @@ public class VocabularyController {
 
     @RequestMapping(value = "paper", method = RequestMethod.GET, produces = "application/pdf")
     public ResponseEntity<byte[]> getPaperAsPdf() {
-//System.out.println(this.termRepository.getAll().size() + " terms found");
-        List<Term> terms = ImmutableList.<Term>builder()
-                .addAll(this.termRepository.findAll())
-                .addAll(this.termRepository.findAll())
-                .addAll(this.termRepository.findAll())
-                .build();
-        PdfList list = PdfList.getListFromTerms(terms.stream()
-                .sorted((term1, term2) -> term1.getTerm().compareTo(term2.getTerm()))
-                .collect(Collectors.toList()));
 
-        try (FileInputStream fileInputStream = new FileInputStream(list.getFilepath())) {
+        String filename = "Vocabulary";
+        List<Term> terms = StreamUtils.createStreamFromIterator(this.termRepository.findAll().iterator())
+                .sorted((term1, term2) -> term1.getTerm().compareTo(term2.getTerm()))
+                .collect(Collectors.toList());
+        String pdfFilepath = pdfService.getListFromTerms(filename, terms);
+
+        try (FileInputStream fileInputStream = new FileInputStream(pdfFilepath)) {
             byte[] contents = IOUtils.toByteArray(fileInputStream);
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.setContentType(MediaType.APPLICATION_PDF);
-            httpHeaders.setContentDispositionFormData(list.getFilename(), list.getFilename());
+            httpHeaders.setContentDispositionFormData(filename, filename);
 
-            Path path = Paths.get(list.getFilepath());
+            Path path = Paths.get(pdfFilepath);
             Files.deleteIfExists(path);
 
             return new ResponseEntity<>(contents, httpHeaders, HttpStatus.OK);
         } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
-
-
     }
 
     @RequestMapping(value = "term", method = RequestMethod.GET)
@@ -104,4 +98,7 @@ public class VocabularyController {
 
     @Autowired
     public void setTermRepository(TermRepository termRepository) { this.termRepository = termRepository; }
+
+    @Autowired
+    public void setPdfService(PdfService pdfService) { this.pdfService = pdfService; }
 }

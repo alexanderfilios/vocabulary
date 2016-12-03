@@ -29,6 +29,11 @@ $ /usr/local/mysql/bin/mysql --host=0.0.0.0 --port=5000 -u root -p
 ```
 The password is ``pass`` as we set it above when we created the image and ran the container. Run ``show databases;`` and check that the database ``Vocabulary`` is indeed there. The schema should be still empty by now.
 
+> To keep a backup of the data of all the tables for the database ``Vocabulary`` in the file``my-backup.txt``, run the command:
+```bash
+$ /usr/local/mysql/bin/mysqldump --host=0.0.0.0 --port=5000 -u root -p Vocabulary > ./my-backup.txt
+```
+
 The ``application.yml`` file should have the following persistence configuration that uses the configuration we defined before.
 
 ```yaml

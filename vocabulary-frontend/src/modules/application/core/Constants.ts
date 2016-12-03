@@ -3,5 +3,5 @@
  */
 
 export class Constants {
-    public static BASE_URL: string = 'http://localhost:8084/';
+    public static BASE_URL: string = 'http://localhost:8082/';
 }
