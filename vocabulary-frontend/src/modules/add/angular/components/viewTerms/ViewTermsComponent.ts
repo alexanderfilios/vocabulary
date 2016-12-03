@@ -79,7 +79,7 @@ export class ViewTermsComponent implements ng.IComponentOptions {
             <tr>
                 <td class="text-center"
                     st-pagination=""
-                    st-items-by-page="5"
+                    st-items-by-page="15"
                     colspan="4"></td>
             </tr>
         </tfoot>
