@@ -15,7 +15,7 @@ databaseChangeLog:
             constraints:
               nullable: false
             name: antonym
-            type: VARCHAR(45)
+            type: VARCHAR(80)
         - column:
             constraints:
               nullable: false
@@ -36,10 +36,10 @@ databaseChangeLog:
             type: INT
         - column:
             name: definition
-            type: VARCHAR(45)
+            type: VARCHAR(100)
         - column:
             name: comments
-            type: VARCHAR(45)
+            type: VARCHAR(200)
         - column:
             name: term_id
             type: INT
@@ -58,10 +58,10 @@ databaseChangeLog:
             type: INT
         - column:
             name: example
-            type: VARCHAR(100)
+            type: VARCHAR(200)
         - column:
             name: comments
-            type: VARCHAR(100)
+            type: VARCHAR(200)
         - column:
             name: definition_id
             type: INT
@@ -82,7 +82,7 @@ databaseChangeLog:
             constraints:
               nullable: false
             name: synonym
-            type: VARCHAR(45)
+            type: VARCHAR(80)
         - column:
             constraints:
               nullable: false
@@ -103,16 +103,16 @@ databaseChangeLog:
             type: INT
         - column:
             name: term
-            type: VARCHAR(45)
+            type: VARCHAR(80)
         - column:
             name: comments
-            type: VARCHAR(45)
+            type: VARCHAR(200)
         - column:
             name: type
-            type: VARCHAR(45)
+            type: VARCHAR(20)
         - column:
             name: gender
-            type: VARCHAR(45)
+            type: VARCHAR(10)
         - column:
             name: is_reflexive
             type: BIT(1)
