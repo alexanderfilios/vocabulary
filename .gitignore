@@ -9,8 +9,27 @@ vocabulary-backend/.idea/
 vocabulary-backend/mvnw*
 
 # FRONTEND 2
-vocabulary-frontend-2/
+vocabulary-frontend-2/build
+vocabulary-frontend-2/node_modules
+vocabulary-frontend-2/typings
+
+# FRONTEND 2: Ignore generated .js and js.map files
+vocabulary-frontend-2/src/app/*.js
+vocabulary-frontend-2/src/app/*.js.map
+vocabulary-frontend-2/src/app/**/*.js
+vocabulary-frontend-2/src/app/**/*.js.map
+vocabulary-frontend-2/boot.js
+vocabulary-frontend-2/boot.js.map
+vocabulary-frontend-2/polyfills.js
+vocabulary-frontend-2/polyfills.js.map
+vocabulary-frontend-2/styles.js
+vocabulary-frontend-2/styles.js.map
+vocabulary-frontend-2/vendor.js
+vocabulary-frontend-2/vendor.js.map
+vocabulary-frontend-2/npm-debug.log
 
 # GENERAL
+**/.idea
+**/.vscode
 **.iml
 **/.DS_Store

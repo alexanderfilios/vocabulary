@@ -1,0 +1,18 @@
+body {
+  background-color: #ffffff;
+  font-family: 'Courier New', sans-serif;
+}
+
+h1 {
+  text-transform: uppercase;
+  color:goldenrod;
+}
+
+a {
+  color: #445588;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
