@@ -1,17 +1,15 @@
 import { ModuleWithProviders }  from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { BarRoutes } from './components/bar/bar.routing';
-import { FooRoutes } from './components/foo/foo.routing';
 import { HomeRoutes } from './components/home/home.routing';
 import { AddRoutes } from "./components/add/add.routing";
+import { ViewRoutes } from "./components/view/view.routing";
 
 const appRoutes: Routes = [
 
   ...HomeRoutes,
-  ...BarRoutes,
-  ...FooRoutes,
-  ...AddRoutes
+  ...AddRoutes,
+  ...ViewRoutes
 
 ];
 

@@ -1,11 +1,13 @@
+import * as moment from 'moment/moment';
+
 import { Injectable } from '@angular/core';
 
 import {TermService} from "../services/term-service";
 import { LoggerService } from "../services/logger-service";
 import { Observable } from "rxjs/Observable";
 
-import {Term} from "../entities/term";
-import {Definition, Synonym, Antonym} from "../entities/definition";
+import {Term, Type, Gender} from "../entities/term";
+import {Definition} from "../entities/definition";
 import {Example} from "../entities/example";
 /**
  * Created by alexandrosfilios on 30/10/16.
@@ -64,20 +66,20 @@ export class TermModel {
         return {
             id: term.id,
             term: term.term,
-            type: term.type,
+            type: Type[term.type],
             comments: term.comments,
             gender: term.gender,
-            createdOn: term.createdOn,
+            createdOn: moment(new Date(term.createdOn)).format('YYYY-MM-DD'),
             definitions: term.definitions
                 .filter(definition => !definition.isEmpty())
                 .map(definition => ({
                     definition: definition.definition,
                     synonyms: definition.synonyms
                         .filter(synonym => synonym)
-                        .map(synonym => ({ synonym: synonym.synonym })),
+                        .map(synonym => ({ synonym: synonym })),
                     antonyms: definition.antonyms
                         .filter(antonym => antonym)
-                        .map(antonym => ({ antonym: antonym.antonym })),
+                        .map(antonym => ({ antonym: antonym })),
                     comments: definition.comments,
                     examples: definition.examples
                         .filter(example => !example.isEmpty())
@@ -92,19 +94,19 @@ export class TermModel {
     private _dictToTerm(term: any): Term {
         return new Term(
             term.id,
-            term.type,
+            Type[<string>term.type],
             term.term,
             term.comments,
-            term.gender,
+            Gender[<string>term.gender],
             term.createdOn,
             term.definitions.map(definition => new Definition(
                 definition.definition,
                 definition.synonyms
                     .filter(synonym => synonym)
-                    .map(synonym => new Synonym(synonym.synonym)),
+                    .map(synonym => synonym.synonym),
                 definition.antonyms
                     .filter(antonym => antonym)
-                    .map(antonym => new Antonym(antonym.antonym)),
+                    .map(antonym => antonym.antonym),
                 definition.comments,
                 definition.examples
                     .filter(example => example.example)

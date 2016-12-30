@@ -6,5 +6,9 @@ import '@angular/platform-browser';
 import '@angular/platform-browser-dynamic';
 import '@angular/router';
 
+// Bootstrap
+import 'jquery';
+import 'bootstrap/dist/js/bootstrap.min';
+
 // RxJS
 import 'rxjs';

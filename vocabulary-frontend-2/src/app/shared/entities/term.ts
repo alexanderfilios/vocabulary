@@ -3,6 +3,7 @@
  */
 
 import {Definition} from "./definition";
+import {FormGroup, FormBuilder} from "@angular/forms";
 export enum Type { VERB, NOUN, PHRASE }
 
 export enum Gender { MASCULINE, FEMININE }
@@ -33,15 +34,27 @@ export class Term {
     public isEmpty(): boolean {
         return this.term.length > 0 && !!this.type;
     }
-    public static getAllTypes(): Array<Type> {
-        return [Type.NOUN, Type.PHRASE, Type.VERB];
+    public static getAllTypes(): Array<string> {
+        return [Type[Type.NOUN], Type[Type.PHRASE], Type[Type.VERB]];
     }
-    public static getAllGenders(): Array<Gender> {
-        return [Gender.FEMININE, Gender.MASCULINE];
+    public static getAllGenders(): Array<string> {
+        return [Gender[Gender.FEMININE], Gender[Gender.MASCULINE]];
     }
     public withExtraFields(): Term {
         this.definitions = this.definitions.concat(new Definition())
             .map(definition => definition.withExtraFields());
         return this;
+    }
+    public getFormGroup(formBuilder: FormBuilder): FormGroup {
+        return formBuilder.group({
+            id: formBuilder.control(this.id),
+            type: formBuilder.control(this.type),
+            term: formBuilder.control(this.term),
+            gender: formBuilder.control(this.gender),
+            createdOn: formBuilder.control(this.createdOn),
+            comments: formBuilder.control(this.comments),
+            definitions: formBuilder.array(this.definitions
+                .map(definition => definition.getFormGroup(formBuilder)))
+        });
     }
 }

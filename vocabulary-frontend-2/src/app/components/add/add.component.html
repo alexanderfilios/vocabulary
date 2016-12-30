@@ -1,4 +1,119 @@
-<h1>Welcome in the bar, wanne have drink?</h1>
-<ul>
-    <li><a routerLink="/view">Go back</a></li>
-</ul>
+<div class="col-xs-10">
+    <div class="alert alert-danger" *ngIf="termNotFound">
+        <i class="glyphicon glyphicon-remove"></i> Term to edit not found!
+    </div>
+    <div class="alert alert-success" *ngIf="termSubmitted && submitSuccess">
+        <i class="glyphicon glyphicon-ok"></i> Term <strong>"{{termSubmitted.term}}"</strong> submitted successfully!
+    </div>
+    <div class="alert alert-danger" *ngIf="termSubmitted && !submitSuccess">
+        <i class="glyphicon glyphicon-remove"></i> Term <strong>"{{termSubmitted.term}}"</strong> was not submitted!
+    </div>
+    <form [formGroup]="termForm" (ngSubmit)="save()">
+        <div class="term-row row">
+            <div class="form-group col-xs-3">
+                <input type="hidden"
+                       [(ngModel)]="id"
+                       formControlName="id" />
+                <input type="hidden"
+                       [(ngModel)]="createdOn"
+                       formControlName="createdOn" />
+                <input class="form-control"
+                       placeholder="Term"
+                       (keyup)="checkType()"
+                       [(ngModel)]="term.term"
+                       formControlName="term" />
+            </div>
+            <div class="col-xs-2 text-center">
+                <a target="_blank" href="{{term.term | dictionaryLink : 'WORD_REFERENCE'}}"><i class="wordreference" width="10" height="10"></i></a>
+                <a target="_blank" href="{{term.term | dictionaryLink : 'THE_FREE_DICTIONARY'}}"><i class="thefreedictionary" width="10" height="10"></i></a>
+            </div>
+            <div class="form-group col-xs-2">
+                <select class="form-control"
+                        [(ngModel)]="term.type"
+                        formControlName="type">
+                    <option *ngFor="let type of TERM_TYPES" [value]="Type[type]">{{type}}</option>
+                </select>
+            </div>
+            <div class="col-xs-2" *ngIf="term.type !== Type.NOUN"></div>
+            <div class="form-group col-xs-2" *ngIf="term.type === Type.NOUN">
+                <select class="form-control"
+                        [(ngModel)]="term.gender"
+                        formControlName="gender">
+                    <option *ngFor="let gender of NOUN_GENDERS" [value]="Gender[gender]">{{gender}}</option>
+                </select>
+            </div>
+            <div class="form-group col-xs-3">
+                <input type="text"
+                       class="form-control"
+                       [(ngModel)]="term.comments"
+                       formControlName="comments"
+                       placeholder="Write a comment..." />
+            </div>
+        </div>
+        <div formArrayName="definitions">
+            <div *ngFor="let definition of term.definitions; let $definitionIndex = index"
+                 [formGroup]="termForm.controls.definitions.controls[$definitionIndex]">
+                <div class="definition-title-row row">
+                    <div class="col-xs-12">
+                        <strong>Definition {{$definitionIndex + 1}}</strong>
+                    </div>
+                </div>
+                <div class="definition-row row">
+                    <div class="form-group col-xs-9">
+                        <input type="text"
+                               placeholder="Definition"
+                               class="form-control"
+                               (keyup)="onTypeDefinition()"
+                               [(ngModel)]="term.definitions[$definitionIndex].definition"
+                               formControlName="definition" />
+                    </div>
+                    <div class="form-group col-xs-3">
+                        <input type="text"
+                               class="form-control"
+                               formControlName="comments"
+                               [(ngModel)]="term.definitions[$definitionIndex].comments"
+                               placeholder="Write a comment..." />
+                    </div>
+                </div>
+                <div class="synonyms-antonyms-row row">
+                    <div class="col-xs-6">
+                        <tag-input [placeholder]="'+Synonym'"
+                                   [secondaryPlaceholder]="'Synonyms'"
+                                   formControlName="synonyms"
+                                   [(ngModel)]="term.definitions[$definitionIndex].synonyms"></tag-input>
+                    </div>
+                    <div class="col-xs-6">
+                        <tag-input [placeholder]="'+Antonym'"
+                                   [secondaryPlaceholder]="'Antonyms'"
+                                   formControlName="antonyms"
+                                   [(ngModel)]="term.definitions[$definitionIndex].antonyms"></tag-input>
+                    </div>
+                </div>
+                <div class="examples-row row" formArrayName="examples">
+                    <div class="form-group col-xs-12" *ngFor="let example of definition.examples; let $exampleIndex = index">
+                        <div [formGroup]="termForm.controls.definitions.controls[$definitionIndex].controls.examples.controls[$exampleIndex]">
+                            <strong class="col-xs-2">Example {{$exampleIndex + 1}}:</strong>
+                            <div class="col-xs-10">
+                                <input type="text"
+                                       placeholder="Add an example..."
+                                       class="form-control"
+                                       (keyup)="onTypeExample($definitionIndex)"
+                                       formControlName="example"
+                                       [(ngModel)]="term.definitions[$definitionIndex].examples[$exampleIndex].example" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <button class="col-xs-1 pull-right btn btn-primary" type="submit">Add</button>
+            <button class="col-xs-1 pull-right btn btn-danger" type="button" (click)="clear()">Clear</button>
+        </div>
+    </form>
+</div>
+
+<a class="right carousel-control" routerLink="/view">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+</a>

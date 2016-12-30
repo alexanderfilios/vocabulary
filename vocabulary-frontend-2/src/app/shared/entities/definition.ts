@@ -1,19 +1,20 @@
 import {Example} from "./example";
 import {Term} from "./term";
+import {FormBuilder, FormGroup} from "@angular/forms";
 /**
  * Created by alexandrosfilios on 30/10/16.
  */
 
-export class Synonym {
-    constructor(public synonym: string) {}
-}
-export class Antonym {
-    constructor(public antonym: string) {}
-}
+// export class Synonym {
+//     constructor(public synonym: string) {}
+// }
+// export class Antonym {
+//     constructor(public antonym: string) {}
+// }
 export class Definition {
     public definition: string;
-    public synonyms: Array<Synonym>;
-    public antonyms: Array<Antonym>;
+    public synonyms: Array<string>;
+    public antonyms: Array<string>;
     public comments: string;
     public examples: Array<Example>;
     constructor(definition?: string,
@@ -22,10 +23,8 @@ export class Definition {
                 comments?: string,
                 examples?: Array<Example>) {
         this.definition = definition || '';
-        this.synonyms = (synonyms || [])
-            .map(synonym => new Synonym(synonym));
-        this.antonyms = (antonyms || [])
-            .map(antonym => new Antonym(antonym));
+        this.synonyms = (synonyms || []);
+        this.antonyms = (antonyms || []);
         this.comments = comments || '';
         this.examples = examples || [];
     }
@@ -42,5 +41,14 @@ export class Definition {
         this.examples = this.examples.concat(new Example)
             .map(example => example.withExtraFields());
         return this;
+    }
+    public getFormGroup(formBuilder: FormBuilder): FormGroup {
+        return formBuilder.group({
+            definition: formBuilder.control(this.definition),
+            synonyms: formBuilder.control(this.synonyms),
+            antonyms: formBuilder.control(this.antonyms),
+            comments: formBuilder.control(this.comments),
+            examples: formBuilder.array(this.examples.map(example => example.getFormGroup(formBuilder)))
+        });
     }
 }

@@ -1,0 +1,79 @@
+<div class="col-xs-10 col-xs-offset-2">
+    <div class="alert alert-success" *ngIf="termRestored && restoreSuccess">
+        <i class="glyphicon glyphicon-ok"></i> Term <strong>"{{termRestored.term}}"</strong> restored successfully!
+    </div>
+    <div class="alert alert-danger" *ngIf="termRestored && !restoreSuccess">
+        <i class="glyphicon glyphicon-remove"></i> Term <strong>"{{termRestored.term}}"</strong> was not restored!
+    </div>
+    <div class="alert alert-success" *ngIf="termDeleted && deleteSuccess">
+        <i class="glyphicon glyphicon-ok"></i> Term <strong>"{{termDeleted.term}}"</strong> deleted successfully!
+        <a (click)="restore(termDeleted)">Undo!</a>
+    </div>
+    <div class="alert alert-danger" *ngIf="termDeleted && !deleteSuccess">
+        <i class="glyphicon glyphicon-remove"></i> Term <strong>"{{termDeleted.term}}"</strong> was not deleted!
+    </div>
+    <table st-table="displayedTerms" st-safe-src="terms" class="table table-striped">
+        <thead>
+        <tr>
+            <th class="col-xs-2" st-sort="term">Term</th>
+            <th class="col-xs-6" st-sort="definition.definition" st-sort-default="true">Definitions</th>
+            <th class="col-xs-2" st-sort="createdOn">Created On</th>
+            <th class="col-xs-1">Dictionaries</th>
+            <th class="col-xs-1">Edit</th>
+        </tr>
+        <tr>
+            <th colspan="5"><input class="form-control"
+                                   st-search=""
+                                   placeholder="Search term, definition, synonym, antonym or example..."
+                                   type="text"/></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let term of terms">
+            <td>{{term.term}}</td>
+            <td>
+                <div *ngFor="let definition of term.definitions">
+                    <strong>{{definition.definition}}:</strong>
+                        <span *ngFor="let synonym of definition.synonyms">
+                            <span class="text-success">{{synonym}}</span>
+                        </span>
+                        <span *ngFor="let antonym of definition.antonyms">
+                            <span class="text-danger">{{antonym}}</span>
+                        </span>
+                        <span *ngFor="let example of definition.examples">
+                            <em>{{example.example}}</em>
+                        </span>
+                </div>
+            </td>
+            <td>{{term.createdOn | date : 'd.MM.yy'}}</td>
+            <td>
+                <a target="_blank" href="{{term.term | dictionaryLink : 'WORD_REFERENCE'}}"><i class="wordreference" width="10" height="10"></i></a>
+                <a target="_blank" href="{{term.term | dictionaryLink : 'THE_FREE_DICTIONARY'}}"><i class="thefreedictionary" width="10" height="10"></i></a>
+            </td>
+            <td>
+                <a routerLink="/add/{{term.id}}"><i class="glyphicon glyphicon-pencil"></i></a>
+                <a (click)="delete(term)"><i class="glyphicon glyphicon-trash"></i></a>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td class="text-center"
+                st-pagination=""
+                st-items-by-page="15"
+                colspan="4"></td>
+        </tr>
+        </tfoot>
+    </table>
+
+    <div class="col-xs-8 col-xs-offset-2">
+        <!--<embed [src]="linkToPaper | safe"-->
+               <!--width="500"-->
+               <!--height="700"-->
+               <!--type="application/pdf" />-->
+    </div>
+</div>
+<a class="left carousel-control" routerLink="/add">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+</a>
