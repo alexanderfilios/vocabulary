@@ -130,7 +130,6 @@ export class TermModel {
     
     public fetchTerms(): Observable<Array<Term>> {
         const self = this;
-        console.log('fetching terms');
         return self.termService.fetchTerms()
             .map(terms => terms.map(self._dictToTerm))
             .catch(error => {

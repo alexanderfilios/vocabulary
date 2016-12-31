@@ -6,5 +6,6 @@ import { AddComponent } from './index';
 export const AddRoutes = [
 
     { path: 'add', component: AddComponent},
+    { path: 'add/:id', component: AddComponent }
 
 ];

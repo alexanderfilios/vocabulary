@@ -1,6 +1,5 @@
 import {Example} from "./example";
-import {Term} from "./term";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormGroup, FormControl, FormArray} from "@angular/forms";
 /**
  * Created by alexandrosfilios on 30/10/16.
  */
@@ -42,13 +41,13 @@ export class Definition {
             .map(example => example.withExtraFields());
         return this;
     }
-    public getFormGroup(formBuilder: FormBuilder): FormGroup {
-        return formBuilder.group({
-            definition: formBuilder.control(this.definition),
-            synonyms: formBuilder.control(this.synonyms),
-            antonyms: formBuilder.control(this.antonyms),
-            comments: formBuilder.control(this.comments),
-            examples: formBuilder.array(this.examples.map(example => example.getFormGroup(formBuilder)))
+    public getFormGroup(): FormGroup {
+        return new FormGroup({
+            definition: new FormControl(this.definition),
+            synonyms: new FormControl(this.synonyms),
+            antonyms: new FormControl(this.antonyms),
+            comments: new FormControl(this.comments),
+            examples: new FormArray(this.examples.map(example => example.getFormGroup()))
         });
     }
 }

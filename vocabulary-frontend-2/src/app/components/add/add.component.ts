@@ -1,20 +1,18 @@
 /**
  * Created by alexandrosfilios on 26/12/16.
  */
-import { Component } from '@angular/core';
+import {Component, NgModule} from '@angular/core';
 import {TermModel} from "../../shared/models/term-model";
 import {Term, Type, Gender} from "../../shared/entities/term";
-import {Router, ActivatedRoute} from "@angular/router";
 import {Definition} from "../../shared/entities/definition";
 import {Example} from "../../shared/entities/example";
-import {FormGroup, FormBuilder, FormArray} from "@angular/forms";
+import {FormGroup, FormArray} from "@angular/forms";
+import {ActivatedRoute, Router, Route} from "@angular/router";
 
 @Component({
-
     selector: 'vocabulary-add',
     styleUrls: ['./add.component.css'],
     templateUrl: './add.component.html'
-
 })
 
 export class AddComponent {
@@ -23,6 +21,7 @@ export class AddComponent {
     public term: Term;
     public termSubmitted: Term;
     public existingTerms: Array<{[key: string]: string}>;
+    public existingTermNames: Array<string>;
     public TERM_TYPES: Array<string>;
     public NOUN_GENDERS: Array<string>;
     public termNotFound: boolean;
@@ -32,26 +31,44 @@ export class AddComponent {
 
 
     ngOnInit() {
-        this.termForm = this.term.getFormGroup(this._formBuilder);
+        this.initForm(new Term());
     }
 
-    constructor(private _formBuilder: FormBuilder, public termModel: TermModel) {
+    constructor(private termModel: TermModel,
+                private activatedRoute: ActivatedRoute,
+                private router: Router) {
         const self = this;
-        self.term = new Term().withExtraFields();
 
         self.termSubmitted = null;
         self.TERM_TYPES = Term.getAllTypes();
         self.NOUN_GENDERS = Term.getAllGenders();
         self.termNotFound = false;
-        termModel.fetchExistingTerms()
-            .subscribe(terms => self.existingTerms = terms);
-        // route.queryParams.subscribe(params => {
-        //         if ('id' in params) {
-        //             termModel.fetchTermById(Number.parseInt(params['id']))
-        //                 .subscribe(term => self.term = term.withExtraFields());
-        //         }
-        //     });
+
+        self.fetchExistingTerms();
+
+        self.activatedRoute.params.subscribe(params => {
+            if ('id' in params) {
+                self.termModel.fetchTermById(Number.parseInt(params['id']))
+                    .subscribe(
+                        term => { self.initForm(term); },
+                        () => { self.initForm(new Term()); }
+                    );
+            }
+        });
     }
+    private initForm(newTerm: Term) {
+        this.term = newTerm.withExtraFields();
+        this.termForm = this.term.getFormGroup();
+    }
+    private fetchExistingTerms() {
+        const self = this;
+        self.termModel.fetchExistingTerms()
+            .subscribe(terms => {
+                self.existingTerms = terms;
+                self.existingTermNames = terms.map(term => term['term']);
+            });
+    }
+
     public checkType(): void {
         const articles = ['le ', 'la ', 'l\'', 'les'];
         if (articles.some(nounPrefix => this.term.term.startsWith(nounPrefix))) {
@@ -69,7 +86,6 @@ export class AddComponent {
         }
     }
     public onTypeDefinition(): void {
-        console.log(this.termForm.getRawValue());
         const emptyDefinitionIndices: Array<number> = this.term.definitions
             .map((definition, index) => definition.isEmpty() ? index : null)
             .filter(definitionIndex => definitionIndex !== null);
@@ -80,14 +96,13 @@ export class AddComponent {
             // We keep the first empty definition
             this.removeDefinitions(emptyDefinitionIndices.slice(1));
         }
-        console.log(this.term);
     }
     private addDefinition(): void {
         const newDefinition = new Definition().withExtraFields();
         const definitionArrayCtrl = <FormArray>this.termForm.controls['definitions'];
 
         this.term.definitions.push(newDefinition);
-        definitionArrayCtrl.push(newDefinition.getFormGroup(this._formBuilder));
+        definitionArrayCtrl.push(newDefinition.getFormGroup());
     }
     private removeDefinitions(indicesToRemove: Array<number>): void {
         const definitionArrayCtrl = <FormArray>this.termForm.controls['definitions'];
@@ -114,7 +129,7 @@ export class AddComponent {
         const exampleArrayCtrl = <FormArray>(<FormArray>definitionArrayCtrl.controls[definitionIndex]).controls['examples'];
 
         this.term.definitions[definitionIndex].examples.push(newExample);
-        exampleArrayCtrl.push(newExample.getFormGroup(this._formBuilder));
+        exampleArrayCtrl.push(newExample.getFormGroup());
     }
     private removeExamples(definitionIndex: number, indicesToRemove: Array<number>): void {
         const definitionArrayCtrl = <FormArray>this.termForm.controls['definitions'];
@@ -126,28 +141,29 @@ export class AddComponent {
 
     }
     public save(): void {
-        this.termModel.saveTerm(this.term)
+        const self = this;
+        self.termModel.saveTerm(self.term)
             .subscribe(() => {
-                this.termSubmitted = this.term;
-                this.submitSuccess = true;
-                this.term = new Term().withExtraFields();
+                self.termSubmitted = self.term;
+                self.submitSuccess = true;
+                self.initForm(new Term());
+                self.fetchExistingTerms();
             },
                 () => {
-                this.termSubmitted = this.term;
-                this.submitSuccess = false;
+                self.termSubmitted = self.term;
+                self.submitSuccess = false;
             });
     }
-    public loadTerm(): void {
-        const self = this;
-        if (self.existingTerms.map(term => term['term']).indexOf(self.term.term) >= 0) {
-            self.termModel.fetchTermByName(self.term.term)
-                .subscribe(
-                    term => self.term = term.withExtraFields(),
-                    () => self.term = new Term().withExtraFields());
+    public loadTerm(term: string): void {
+        if (term !== undefined && !Array.isArray(this.existingTerms)) {
+            return;
         }
-    }
-    public clear(): void {
-        this.term = new Term().withExtraFields();
+        const termId = this.existingTerms
+            .filter(t => t['term'] === term)
+            .map(t => t['id'])[0];
+        if (termId !== undefined) {
+            this.router.navigate(['/add', termId]);
+        }
     }
 
 }

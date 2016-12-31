@@ -18,12 +18,16 @@
                        [(ngModel)]="createdOn"
                        formControlName="createdOn" />
                 <input class="form-control"
+                       ng2-auto-complete
+                       [source]="existingTermNames"
                        placeholder="Term"
                        (keyup)="checkType()"
+                       (ngModelChange)="loadTerm(term.term)"
                        [(ngModel)]="term.term"
                        formControlName="term" />
             </div>
             <div class="col-xs-2 text-center">
+                <!--<span>{{term.term}}</span>-->
                 <a target="_blank" href="{{term.term | dictionaryLink : 'WORD_REFERENCE'}}"><i class="wordreference" width="10" height="10"></i></a>
                 <a target="_blank" href="{{term.term | dictionaryLink : 'THE_FREE_DICTIONARY'}}"><i class="thefreedictionary" width="10" height="10"></i></a>
             </div>

@@ -1,4 +1,4 @@
-import {FormGroup, FormBuilder} from "@angular/forms";
+import {FormGroup, FormControl} from "@angular/forms";
 /**
  * Created by alexandrosfilios on 30/10/16.
  */
@@ -17,10 +17,10 @@ export class Example {
     public withExtraFields(): Example {
         return this;
     }
-    public getFormGroup(formBuilder: FormBuilder): FormGroup {
-        return formBuilder.group({
-            example: formBuilder.control(this.example),
-            comments: formBuilder.control(this.comments)
+    public getFormGroup(): FormGroup {
+        return new FormGroup({
+            example: new FormControl(this.example),
+            comments: new FormControl(this.comments)
         });
     }
 }

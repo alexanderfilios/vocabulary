@@ -33,8 +33,8 @@
     "core-js": "2.4.1",
     "jquery": "^3.1.1",
     "moment": "^2.17.1",
+    "ng2-auto-complete": "^0.8.4",
     "ng2-tag-input": "^0.4.8",
-    "ng2-typeahead": "^1.2.0",
     "rxjs": "5.0.0-beta.12",
     "zone.js": "0.6.23"
   },
