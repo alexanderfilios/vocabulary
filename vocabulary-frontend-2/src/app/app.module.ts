@@ -18,6 +18,7 @@ import { LoggerService } from "./shared/services/logger-service";
 import { DictionaryLinkPipe } from "./shared/pipes/dictionary-link.pipe";
 import { ViewComponent } from "./components/view/view.component";
 import { SafePipe } from "./shared/pipes/safe-pipe";
+import { ViewPdfComponent } from "./components/pdf/view-pdf.component";
 
 @NgModule({
   imports: [
@@ -34,6 +35,7 @@ import { SafePipe } from "./shared/pipes/safe-pipe";
       SafePipe,
       AddComponent,
       ViewComponent,
+      ViewPdfComponent,
       DictionaryLinkPipe
   ],
   providers: [

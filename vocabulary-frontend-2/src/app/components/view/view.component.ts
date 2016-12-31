@@ -21,8 +21,6 @@ export class ViewComponent {
     public termRestored: Term;
     public restoreSuccess: boolean = false;
     public deleteSuccess: boolean = false;
-
-    public linkToPaper: string = Constants.BASE_URL + 'paper';
     
     constructor(public termModel: TermModel) {
         const self = this;
